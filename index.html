@@ -1,0 +1,382 @@
+<html>
+    <head>
+        <title>log browser</title>
+
+        <link rel="icon" href="img/icon.png">
+
+        <meta charset="UTF-8">
+
+        <!-- Log app CSS -->
+        <link rel="stylesheet" href="css/log_app.css">
+
+        <!-- Hack CSS -->
+        <link rel="stylesheet" href="node_modules/hack/dist/hack.css">
+
+        <!-- Material icons -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+        <!-- Log app -->
+        <script type="text/javascript" src="js/log_app.js"></script>
+
+        <!-- Init log app -->
+        <script>$(document).ready(logApp.init)</script>
+    </head>
+    <body class="hack">
+        <span id="appStatus"></span>
+
+        <div class="container">
+            <h1>log browser</h1>
+            <p id="logAppTeaserText"></p>
+
+            <div class="alert ONLY_STATUS_PENDING_LOG">
+                <input type="file" id="logUploadInput" class="hidden" accept=".log, .txt" />
+
+                <div class="grid">
+                    <div class="cell">
+                        <div class="btn-group" id="newLogControls">
+                            <button class="btn btn-success btn-ghost" id="uploadLogBtn">
+                                <i class="material-icons">arrow_upward</i> upload
+                            </button>
+
+                            <button class="btn btn-primary btn-ghost" id="pasteLogBtn">
+                                <i class="material-icons">file_copy</i> paste
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="cell hidden" id="pasteLogArea">
+                        <form class="form">
+                            <fieldset class="form-group form-textarea">
+                                <label for="pasteLogTextarea">PASTE YOUR LOG:</label>
+                                <textarea id="pasteLogTextarea" rows="5" class="form-control"></textarea>
+                            </fieldset>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary btn-block" id="pasteLogSubmit">Continue</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert ONLY_STATUS_IDLE hidden">
+                <button class="btn btn-error btn-ghost" id="closeLogBtn">
+                    <i class="material-icons">close</i> close log
+                </button>
+
+                <button class="btn btn-primary btn-ghost" id="dateSettingsBtn">
+                    <i class="material-icons">date_range</i> date settings
+                </button>
+
+                <button class="btn btn-ghost" id="clearFiltersBtn">
+                    <i class="material-icons">filter_list</i> clear filters
+                </button>
+
+                <div class="alert hidden" id="dateSettings">
+                    <fieldset class="form-group">
+                        <label for="dateFormatInput">DATE FORMAT:</label>
+                        <input id="dateFormatInput" type="text" placeholder="your date format..." class="form-control">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <button class="btn btn-primary" id="saveDateSettingsBtn">
+                            <i class="material-icons">save</i> save
+                        </button>
+                    </fieldset>
+
+                    <table>
+                        <tr>
+                            <td>d</td>
+                            <td>day of the month, 2 digits with leading zeros: 01 to 31</td>
+                        </tr>
+                        <tr>
+                            <td>m</td>
+                            <td>numeric representation of a month, with leading zeros: 01-12</td>
+                        </tr>
+                        <tr>
+                            <td>Y</td>
+                            <td>a full numeric representation of a year, 4 digits, example: 1999</td>
+                        </tr>
+                        <tr>
+                            <td>H</td>
+                            <td>24-hour format of an hour with leading zeros: 00-23</td>
+                        </tr>
+                        <tr>
+                            <td>i</td>
+                            <td>minutes with leading zeros: 00-59</td>
+                        </tr>
+                        <tr>
+                            <td>s</td>
+                            <td>seconds, with leading zeros: 00-59</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <hr>
+
+                <div class="grid">
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="dayFilter">DAY:</label>
+                            <select id="dayFilter" class="form-control on-change-apply-filters">
+                                <option value="">-- all days --</option>
+                                <option value="1">01</option>
+                                <option value="2">02</option>
+                                <option value="3">03</option>
+                                <option value="4">04</option>
+                                <option value="5">05</option>
+                                <option value="6">06</option>
+                                <option value="7">07</option>
+                                <option value="8">08</option>
+                                <option value="9">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="monthFilter">MONTH:</label>
+                            <select id="monthFilter" class="form-control on-change-apply-filters">
+                                <option value="">-- all months --</option>
+                                <option value="1">01: january</option>
+                                <option value="2">02: february</option>
+                                <option value="3">03: march</option>
+                                <option value="4">04: april</option>
+                                <option value="5">05: may</option>
+                                <option value="6">06: june</option>
+                                <option value="7">07: july</option>
+                                <option value="8">08: august</option>
+                                <option value="9">09: september</option>
+                                <option value="10">10: october</option>
+                                <option value="11">11: november</option>
+                                <option value="12">12: december</option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="yearFilter">YEAR:</label>
+                            <input id="yearFilter" type="number" placeholder="e.g. 2018" class="form-control">
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="hourFilter">HOUR:</label>
+                            <select id="hourFilter" class="form-control on-change-apply-filters">
+                                <option value="">-- all hours --</option>
+                                <option value="0">00: 12 p.m.</option>
+                                <option value="1">01: 1 a.m.</option>
+                                <option value="2">02: 2 a.m.</option>
+                                <option value="3">03: 3 a.m.</option>
+                                <option value="4">04: 4 a.m.</option>
+                                <option value="5">05: 5 a.m.</option>
+                                <option value="6">06: 6 a.m.</option>
+                                <option value="7">07: 7 a.m.</option>
+                                <option value="8">08: 8 a.m.</option>
+                                <option value="9">09: 9 a.m.</option>
+                                <option value="10">10: 10 a.m.</option>
+                                <option value="11">11: 11 a.m.</option>
+                                <option value="12">12: 12 a.m.</option>
+                                <option value="13">13: 1 p.m.</option>
+                                <option value="14">14: 2 p.m.</option>
+                                <option value="15">15: 3 p.m.</option>
+                                <option value="16">16: 4 p.m.</option>
+                                <option value="17">17: 5 p.m.</option>
+                                <option value="18">18: 6 p.m.</option>
+                                <option value="19">19: 7 p.m.</option>
+                                <option value="20">20: 8 p.m.</option>
+                                <option value="21">21: 9 p.m.</option>
+                                <option value="22">22: 10 p.m.</option>
+                                <option value="23">23: 11 p.m.</option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="minuteFilter">MINUTE:</label>
+                            <select id="minuteFilter" class="form-control on-change-apply-filters">
+                                <option value="">-- all minutes --</option>
+                                <option value="0">00</option>
+                                <option value="1">01</option>
+                                <option value="2">02</option>
+                                <option value="3">03</option>
+                                <option value="4">04</option>
+                                <option value="5">05</option>
+                                <option value="6">06</option>
+                                <option value="7">07</option>
+                                <option value="8">08</option>
+                                <option value="9">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="secondFilter">SECOND:</label>
+                            <select id="secondFilter" class="form-control on-change-apply-filters">
+                                <option value="">-- all seconds --</option>
+                                <option value="0">00</option>
+                                <option value="1">01</option>
+                                <option value="2">02</option>
+                                <option value="3">03</option>
+                                <option value="4">04</option>
+                                <option value="5">05</option>
+                                <option value="6">06</option>
+                                <option value="7">07</option>
+                                <option value="8">08</option>
+                                <option value="9">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="cell -4of12">
+                        <fieldset class="form-group">
+                            <label for="reverseResults">REVERSE LIST:</label>
+                            <input id="reverseResults" type="checkbox" class="on-change-apply-filters">
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden ONLY_STATUS_IDLE">
+                <span id="logLineCount"></span>
+                <a id="copyLogText">[ click to copy results ]</a>
+                <hr>
+                <div id="logContainer"></div>
+            </div>
+        </div>
+    </body>
+</html>

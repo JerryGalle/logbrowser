@@ -1,0 +1,25 @@
+/* Hides elements */
+.hidden {
+    display: none;
+}
+
+/* Application status text */
+#appStatus {
+    position: fixed;
+    top: 5px;
+    right: 10px;
+    background-color: grey;
+    color: white;
+}
+
+/* Line counter for log text */
+#logLineCount {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Log dates */
+.log-date {
+    font-weight: bold;
+}

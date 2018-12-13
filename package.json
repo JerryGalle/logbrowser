@@ -1,0 +1,19 @@
+{
+  "name": "logbrowser",
+  "version": "1.0.0",
+  "description": "A browser application to browse log files.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musa11971/logbrowser.git"
+  },
+  "author": "musa11971",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/musa11971/logbrowser/issues"
+  },
+  "homepage": "https://github.com/musa11971/logbrowser#readme",
+  "dependencies": {
+    "hack": "0.8.1"
+  }
+}
